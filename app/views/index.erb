@@ -5,7 +5,7 @@
 </br>
 <h2>Your Questions</h2>
 <%@questions.each do |ques|%>
-<h3><%=ques.name%></h3>
+<h3><a href="/questions/<%=ques.id%>/edit"><%=ques.name%></a></h3>
 <%end%>
 <li><a href="/questions/new">Create a new question</a></li>
 </br>

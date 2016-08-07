@@ -7,6 +7,14 @@ class QuestionController < ApplicationController
     set :views, 'app/views/'
   end
 	
+	get '/questions' do
+		if signed_in?
+			@user = User.find(session[:id])
+			erb :'/questions/index'
+		else
+			redirect '/login'
+		end
+	end
 
 	get '/questions/new' do
 		if signed_in?
@@ -19,7 +27,7 @@ class QuestionController < ApplicationController
 	
 	post '/questions' do
 		
-		if  !params[:answer].empty?
+		if  !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?
 			@user = User.find(session[:id])
 			@user.questions << Question.create(description: params[:description], answer: params[:answer], name: params[:name])
 			redirect '/account'
@@ -28,19 +36,16 @@ class QuestionController < ApplicationController
 		end
 	end
 	
-	get '/questions/:id' do
-		if signed_in?
-			@question = Question.find(params[:id])
-			erb :'/questions/show'
-		else
-			redirect '/login'
-		end
-	end
 	
 	get '/questions/:id/edit' do
 		if signed_in?
-			@question = Question.find(session[:id])
-			erb :'/questions/edit'
+			@user = User.find(session[:id])
+			@question = Question.find(params[:id])
+			if @user.questions.include?(@question)
+				erb :'/questions/edit'
+			else
+				erb :'/account'
+			end
 		else
 			redirect '/login'
 		end
@@ -49,10 +54,10 @@ class QuestionController < ApplicationController
 	
 	patch '/questions/:id' do
 		@question = Question.find(session[:id])
-		if signed_in? && !params[:content].empty?	
-				@question.update(content: params[:content])
-				redirect "/questions/#{@question.id}"
-		elsif signed_in? && params[:content].empty?
+		if signed_in? && !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?	
+			@question.update(description: params[:description], answer: params[:answer], name: params[:name])
+			redirect "/questions"
+		elsif signed_in? && (params[:answer].empty? || params[:name].empty? || params[:description].empty?)
 				redirect "/questions/#{@question.id}/edit"
 		else
 			redirect '/login'

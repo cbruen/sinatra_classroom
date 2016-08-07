@@ -1,0 +1,12 @@
+<h4>Your <a href="/account" method="GET">Profile</a></h4>
+</br>
+<h2>Edit Your Question</h2>
+<form method="POST" action="/questions/<%=@question.id%>">
+	<input id="hidden" type="hidden" name="_method" value="patch">
+	<p>Name: <input type="text" name="name" id="name" value="<%=@question.name%>"></p>
+	</br>
+	<p>Question: <textarea name="description" id="description" rows="3" cols="50"><%=@question.description%></textarea></p>
+	</br>
+	<p>Answer: <textarea name="answer" id="answer" rows="3" cols="50"><%=@question.answer%></textarea></p>
+	<input type="submit" value="update">
+</form>
