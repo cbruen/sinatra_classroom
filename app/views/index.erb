@@ -1,0 +1,16 @@
+
+
+<h1> Welcome, <%=@user.username%></h1>
+
+</br>
+<h2>Your Questions</h2>
+<%@questions.each do |ques|%>
+<h3><%=ques.name%></h3>
+<%end%>
+<li><a href="/questions/new">Create a new question</a></li>
+</br>
+<h2>Your Answers</h2>
+<%@answers.each do |ans|%>
+<h3><%=ans.name%></h3>
+<%end%>
+<li><a href="/answers">Answer more questions</a></li>

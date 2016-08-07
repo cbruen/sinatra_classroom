@@ -1,0 +1,11 @@
+
+
+<h1>Answer Some Questions!!!</h1>
+
+</br>
+
+<%@questions.each do |ques|%>
+<h3><a href="/answers/<%=ques.id%>"><%=ques.name%></a></h3>
+<p><%=ques.description%></p>
+<%end%>
+

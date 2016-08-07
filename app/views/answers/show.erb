@@ -1,0 +1,17 @@
+<h4>Back to <a href="/answers" method="GET">All Questions</a></h4>
+</br>
+<%if @result %>
+<h2>Sorry, try again!!</h2>
+</br>
+</br>
+<%end%>
+
+<h1><%=@answer.name%></h1>
+</br>
+<p><%=@answer.description%></p>
+</br>
+<h3>Type your answer here</h3>
+<form action="/answers/<%=@answer.id%>" method="POST">
+<input type="text" name="answer" id="answer">
+<input type="submit" value="submit">
+</form>
