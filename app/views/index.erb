@@ -11,6 +11,6 @@
 </br>
 <h2>Your Answers</h2>
 <%@answers.each do |ans|%>
-<h3><%=ans.name%></h3>
+<h3><a href="/answers/<%=ans.id%>"><%=ans.name%></a></h3>
 <%end%>
 <li><a href="/answers">Answer more questions</a></li>
