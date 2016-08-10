@@ -36,6 +36,16 @@ class QuestionController < ApplicationController
 		end
 	end
 	
+	get '/questions/:id' do
+		if signed_in?
+			@user = User.find(session[:id])
+			@question = Question.find(params[:id])
+			if @question.user == @user
+				return erb :'/questions/show'
+			end
+		end
+		redirect '/account'
+	end
 	
 	get '/questions/:id/edit' do
 		if signed_in?
@@ -44,7 +54,7 @@ class QuestionController < ApplicationController
 			if @user.questions.include?(@question)
 				erb :'/questions/edit'
 			else
-				erb :'/account'
+				redirect '/account'
 			end
 		else
 			redirect '/login'
@@ -67,11 +77,13 @@ class QuestionController < ApplicationController
 	
 	delete '/questions/:id' do
 		if signed_in?
-			@question = Question.find(session[:id])
-			@question.destroy
-		else
-			redirect '/login'
+			@question = Question.find(params[:id])
+			@user = User.find(session[:id])
+			if @question.user == @user
+				@question.destroy
+			end
 		end
+			redirect '/account'
 	end
 	
 	

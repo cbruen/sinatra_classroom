@@ -1,0 +1,13 @@
+<h4>Your <a href="/account" method="GET">Profile</a></h4>
+</br>
+
+<h1><%=@question.name%></h1>
+<p><%=@question.description%></p>
+<h3>Answer:</h3>
+<p><%=@question.answer%></p>
+</br>
+<h5><a href="/questions/<%=@question.id%>/edit" method="GET">Edit Question</a></h5>
+<form action="/questions/<%=@question.id%>" method="POST">
+<input id="hidden" type="hidden" name="_method" value="delete">
+<input type="submit" value="Delete Question">
+</form>
