@@ -1,7 +1,13 @@
+<% if @user && @user.errors %>
+<% @user.errors.values.each do |error| %>
+<p style="color:red; font-style: italic;"><%= error[0] %></p>
+<%end%>
+<% end %>
+
 
 <form method="POST" action="/login">
 	<label>Name: </label>
-	<input type="text" name="name" id="name">
+	<input type="text" name="username" id="name">
 	<label>Email: </label>
 	<input type="text" name="email" id="email">
 	<label>Password: </label>

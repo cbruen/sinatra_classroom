@@ -55,7 +55,9 @@ class ApplicationController < Sinatra::Base
   		if @user.authenticate(params[:password])
   			session[:id] = @user.id
     		redirect '/account'
+    		return
     	else
+    		@user.errors[:email] = "Wrong email or password. Try again."
     		erb :login
     	end
   end
