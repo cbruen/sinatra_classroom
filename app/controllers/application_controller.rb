@@ -31,13 +31,12 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/signup' do
-
-  		if Helpers.valid_submission(params)
-  			 @user = User.create(username: params[:username], email: params[:email], password: params[:password])
+		@user = User.new(username: params[:username], email: params[:email], password: params[:password])
+  		if @user.save
   			session[:id] = @user.id
   			redirect '/account'
   		else
-  			redirect '/signup'
+  			erb :signup
   		end
   	
   end
@@ -64,7 +63,7 @@ class ApplicationController < Sinatra::Base
   get '/logout' do
   	if signed_in?
   		session.clear
-  		redirect '/login'
+  		redirect '/'
   	else
   		redirect '/'
   	end

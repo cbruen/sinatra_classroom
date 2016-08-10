@@ -1,5 +1,5 @@
 class Helpers 
-	def self.valid_submission(sub)
+	def self.valid_submission(sub)			
 		!sub[:username].empty? && !sub[:email].empty? && !sub[:password].empty?
 	end
 	

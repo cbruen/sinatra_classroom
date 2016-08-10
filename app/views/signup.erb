@@ -1,3 +1,8 @@
+<% if @user %>
+<% @user.errors.values.each do |error| %>
+<p style="color:red; font-style: italic;"><%= error[0] %></p>
+<%end%>
+<% end %>
 
 <form method="POST" action="/signup">
 	<label>Username: </label>
