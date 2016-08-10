@@ -30,6 +30,7 @@ class QuestionController < ApplicationController
 		if  !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?
 			@user = User.find(session[:id])
 			@user.questions << Question.create(description: params[:description], answer: params[:answer], name: params[:name])
+			@user.save
 			redirect '/account'
 		else
 			redirect '/questions/new'
@@ -63,12 +64,13 @@ class QuestionController < ApplicationController
 	end
 	
 	patch '/questions/:id' do
-		@question = Question.find(session[:id])
-		if signed_in? && !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?	
+		@user = User.find_by(id: session[:id])
+		@question = Question.find(params[:id])
+		if signed_in?  && @user == @question.user && !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?
 			@question.update(description: params[:description], answer: params[:answer], name: params[:name])
-			redirect "/questions"
+			redirect "/account"
 		elsif signed_in? && (params[:answer].empty? || params[:name].empty? || params[:description].empty?)
-				redirect "/questions/#{@question.id}/edit"
+			redirect "/questions/#{@question.id}/edit"
 		else
 			redirect '/login'
 		end		

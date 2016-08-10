@@ -2,6 +2,10 @@
 
 <h1> Welcome, <%=@user.username%></h1>
 
+<% if @one %>
+<%= @one %>
+<% end %>
+
 </br>
 <h2>Your Questions</h2>
 <%@questions.each do |ques|%>
