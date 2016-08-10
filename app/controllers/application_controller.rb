@@ -51,15 +51,23 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/login' do
-    @user = User.find_by(username: params[:username])
-  		if @user.authenticate(params[:password])
-  			session[:id] = @user.id
-    		redirect '/account'
-    		return
-    	else
+   	   	if params[:username].empty?
+   	   		@user = User.new
+   	   		@user.errors[:username] = "Name required."
+   	   	else
+   	    	@user = User.find_by(username: params[:username])
+   	  	  	@user ||= User.new
+  			if @user.username.nil?
+				@user.errors[:username] = "Name not found."  		
+  			elsif @user.authenticate(params[:password])
+  				session[:id] = @user.id
+    			redirect '/account'
+    			return
+    		else
     		@user.errors[:email] = "Wrong email or password. Try again."
-    		erb :login
+    		end
     	end
+    	erb :login
   end
   
   get '/logout' do
