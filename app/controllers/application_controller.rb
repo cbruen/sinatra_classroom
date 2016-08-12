@@ -13,11 +13,11 @@ class ApplicationController < Sinatra::Base
  		erb :home
  	end
  	
- 	
+
  	get '/account' do
 		if signed_in?
-			@user=User.find(session[:id])
-			@questions = @user.questions
+			current_user
+			@questions = @current_user.questions
 			@answers = @user.answers
 			erb :index
 		else
@@ -31,7 +31,7 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/signup' do
-		@user = User.new(username: params[:username], email: params[:email], password: params[:password])
+		@user = User.new(params])
   		if @user.save
   			session[:id] = @user.id
   			redirect '/account'
@@ -81,6 +81,11 @@ class ApplicationController < Sinatra::Base
   
 
   helpers do
+  	
+  	def current_user
+  		@current_user ||= User.find(session[:id])
+  	end
+  	
   	def signed_in?
 		!!session[:id]
 	end

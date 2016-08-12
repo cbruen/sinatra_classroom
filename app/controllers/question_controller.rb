@@ -29,8 +29,7 @@ class QuestionController < ApplicationController
 		
 		if  !params[:answer].empty? && !params[:name].empty? && !params[:description].empty?
 			@user = User.find(session[:id])
-			@user.questions << Question.create(description: params[:description], answer: params[:answer], name: params[:name])
-			@user.save
+			@user.questions.create(description: params[:description], answer: params[:answer], name: params[:name])
 			redirect '/account'
 		else
 			redirect '/questions/new'
